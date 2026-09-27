@@ -5,7 +5,7 @@ function KPICards() {
   const [kpi, setKpi] = useState(null);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/kpis").then((res) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/kpis`).then((res) => {
       setKpi(res.data);
     });
   }, []);

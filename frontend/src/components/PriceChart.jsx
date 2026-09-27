@@ -112,7 +112,7 @@ function PriceChart() {
 
   useEffect(() => {
     // Get prices
-   axios.get("http://127.0.0.1:5000/prices").then((response) => {
+   axios.get(`${import.meta.env.VITE_API_URL}/prices`).then((response) => {
 
   const importantDates = [
     "1989-05-25",
@@ -136,7 +136,7 @@ function PriceChart() {
     
 
     // Get change point
-    axios.get("http://127.0.0.1:5000/change-points").then((response) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/change-points`).then((response) => {
       console.log("Change Point:", response.data);
 
       setChangePoint(response.data[0].Date.substring(0, 10));
@@ -259,8 +259,7 @@ const shortEventNames = {
                key={event.Date}
                x={event.Date}
                stroke="green"
-               strokeDasharray="4 4"
-               strokeDasharray="3 3"
+              strokeDasharray="3 3"
                label={{
                  value: shortEventNames[event.Event] || event.Event,
                  position: "top",
