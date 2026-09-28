@@ -143,15 +143,11 @@ function PriceChart() {
     });
 
         // Get events
-    axios
-      .get("http://127.0.0.1:5000/events")
-      .then((response) => {
+    axios.get(`${import.meta.env.VITE_API_URL}/events`).then((response) => {
+      console.log("Events:", response.data);
 
-        console.log("Events:", response.data);
-
-        setEvents(response.data);
-
-      });
+      setEvents(response.data);
+    });
 
 
   }, []);
