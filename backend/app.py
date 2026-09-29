@@ -73,7 +73,7 @@ def kpis():
 @app.route("/change-points")
 def get_change_points():
     try:
-        change_points = pd.read_csv("backend/data/prices.csv")
+        change_points = pd.read_csv("backend/data/change_points.csv")
         return jsonify(change_points.to_dict(orient="records"))
 
     except FileNotFoundError:
