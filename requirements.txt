@@ -8,6 +8,7 @@ pymc
 arviz
 jupyter
 flask
+flask-cors
 python-dotenv
 pytest
 gunicorn
