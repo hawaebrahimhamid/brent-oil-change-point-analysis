@@ -10,3 +10,4 @@ jupyter
 flask
 python-dotenv
 pytest
+gunicorn

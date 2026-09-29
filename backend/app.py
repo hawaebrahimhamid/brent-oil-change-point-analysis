@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Load price data
-prices_df = pd.read_csv("data/prices.csv")
+prices_df = pd.read_csv("backend/data/prices.csv")
 
 prices_df["Date"] = pd.to_datetime(prices_df["Date"])
 
@@ -29,7 +29,7 @@ def home():
 @app.route("/prices")
 def get_prices():
     try:
-        prices = pd.read_csv("data/prices.csv")
+        prices = pd.read_csv("backend/data/prices.csv")
         return jsonify(prices.to_dict(orient="records"))
 
     except FileNotFoundError:
@@ -45,7 +45,7 @@ def get_prices():
 @app.route("/events")
 def get_events():
     try:
-        events = pd.read_csv("data/events.csv")
+        events = pd.read_csv("backend/data/events.csv")
         return jsonify(events.to_dict(orient="records"))
 
     except FileNotFoundError:
@@ -73,7 +73,7 @@ def kpis():
 @app.route("/change-points")
 def get_change_points():
     try:
-        change_points = pd.read_csv("data/change_points.csv")
+        change_points = pd.read_csv("backend/data/prices.csv")
         return jsonify(change_points.to_dict(orient="records"))
 
     except FileNotFoundError:
