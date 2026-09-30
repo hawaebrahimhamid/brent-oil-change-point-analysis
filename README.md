@@ -1,41 +1,185 @@
-Brent Oil Change Point Analysis
-Project Overview
+# Brent Oil Change Point Analysis
 
-This project analyzes historical Brent crude oil prices to identify structural changes associated with major geopolitical and economic events. The analysis combines exploratory data analysis (EDA), Bayesian change point detection, and an interactive dashboard to help stakeholders understand how significant events have influenced oil price behavior over time.
+An end-to-end data science and full-stack application for analyzing historical Brent crude oil prices, detecting structural changes using Bayesian Change Point Analysis, and visualizing results through an interactive web dashboard.
 
-Objectives
-Analyze historical Brent crude oil prices.
-Explore long-term trends and volatility.
-Detect structural breaks using Bayesian Change Point Analysis.
-Relate detected change points to major geopolitical and economic events.
-Build an interactive dashboard for visualizing analysis results.
-Project Workflow
+## 🚀 Live Demo
+
+**[View the Live Dashboard](https://brent-oil-dashboard.vercel.app/)**
+
+**Architecture:** React + Vite (Vercel) → Flask REST API (Render)
+
+---
+
+## 📌 Project Overview
+
+This project analyzes historical Brent crude oil prices to identify structural changes associated with major geopolitical and economic events.
+
+The project combines:
+
+* Exploratory Data Analysis (EDA)
+* Stationarity and volatility analysis
+* Bayesian Change Point Analysis
+* Flask REST API development
+* Interactive React data visualization
+
+The final application allows users to explore oil price trends, detected change points, and historical events through an interactive dashboard.
+
+---
+
+## 🎯 Objectives
+
+* Analyze historical Brent crude oil prices
+* Explore long-term trends and volatility
+* Detect structural breaks using Bayesian Change Point Analysis
+* Relate detected changes to major historical events
+* Build and deploy an interactive data visualization dashboard
+
+---
+
+## 🔄 Project Workflow
+
+```text
 Historical Brent Oil Prices
-           │
-           ▼
-     Data Cleaning
-           │
-           ▼
- Exploratory Data Analysis
-           │
-           ▼
-   Stationarity & Volatility
-           │
-           ▼
+            │
+            ▼
+      Data Cleaning
+            │
+            ▼
+  Exploratory Data Analysis
+            │
+            ▼
+ Stationarity & Volatility
+            │
+            ▼
  Bayesian Change Point Model
-           │
-           ▼
-      Flask REST API
-           │
-           ▼
-     React Dashboard
-Project Structure
-brent-oil-change-point-analysis/
+            │
+            ▼
+       Flask REST API
+            │
+            ▼
+      React Dashboard
+            │
+            ▼
+        Vercel
+```
 
+---
+
+## 🧠 Bayesian Change Point Analysis
+
+The Bayesian model estimates the point where the statistical behavior of Brent oil price returns changes.
+
+### Model Parameters
+
+* **τ (tau):** Change point
+* **μ₁:** Mean return before the change point
+* **μ₂:** Mean return after the change point
+* **σ:** Volatility
+
+### Sampling Configuration
+
+* Draws: 100
+* Tune: 100
+* Chains: 1
+
+### Estimated Result
+
+**Change Point:** 25 May 1989
+
+| Metric             | Before Change | After Change |
+| ------------------ | ------------: | -----------: |
+| Average log return |       -0.015% |      +0.037% |
+
+Estimated volatility:
+
+```text
+σ ≈ 0.029
+```
+
+---
+
+## 📊 Interactive Dashboard
+
+The dashboard provides:
+
+* Brent crude oil price visualization
+* Bayesian change point marker
+* Historical event markers
+* KPI summary cards
+* Date filtering
+* Interactive tooltips
+* Responsive layout
+
+### Dashboard
+
+![Dashboard](docs/dashboard.png)
+
+### Filtered Dashboard
+
+![Filtered Dashboard](docs/filtered_dashboard.png)
+
+---
+
+## 🔌 REST API
+
+The React frontend consumes data from a Flask REST API.
+
+| Endpoint             | Description                             |
+| -------------------- | --------------------------------------- |
+| `GET /prices`        | Returns historical Brent oil prices     |
+| `GET /change-points` | Returns detected Bayesian change points |
+| `GET /events`        | Returns major historical events         |
+| `GET /kpis`          | Returns dashboard KPI statistics        |
+
+### Production Deployment
+
+**Frontend:** React + Vite → Vercel
+**Backend:** Flask REST API → Render
+**Communication:** HTTPS REST API
+**CORS:** Flask-CORS
+
+---
+
+## 🛠️ Technologies
+
+### Backend & Data Science
+
+* Python
+* Flask
+* Pandas
+* NumPy
+* PyMC
+* Statsmodels
+
+### Frontend
+
+* React
+* Vite
+* Recharts
+* Axios
+* CSS
+
+### Development & Deployment
+
+* Git
+* GitHub
+* Jupyter Notebook
+* VS Code
+* Vercel
+* Render
+
+---
+
+## 📁 Project Structure
+
+```text
+brent-oil-change-point-analysis/
+│
 ├── backend/
 │   ├── app.py
 │   └── data/
-│       ├── BrentOilPrices.csv
+│       ├── prices.csv
+│       ├── change_points.csv
 │       └── events.csv
 │
 ├── frontend/
@@ -53,101 +197,60 @@ brent-oil-change-point-analysis/
 │
 ├── requirements.txt
 └── README.md
-Technologies Used
-Backend
-Python
-Flask
-Pandas
-NumPy
-PyMC
-Statsmodels
-Frontend
-React
-Recharts
-Axios
-CSS
-Development Tools
-Git
-GitHub
-Jupyter Notebook
-VS Code
-Bayesian Change Point Model
+```
 
-The Bayesian model estimates the point where the statistical behavior of Brent oil price returns changes.
+---
 
-Model parameters include:
+## ⚙️ Key Implementation Details
 
-τ (tau): Change point
-μ₁: Mean return before the change point
-μ₂: Mean return after the change point
-σ: Volatility
+The project follows a separation-of-concerns architecture:
 
-Sampling configuration:
+```text
+Data & Statistical Analysis
+        ↓
+      Flask API
+        ↓
+   React Frontend
+        ↓
+     Dashboard
+```
 
-Draws: 100
-Tune: 100
-Chains: 1
-Results
+The frontend retrieves production data through the Flask API using an environment variable:
 
-Estimated change point:
+```text
+VITE_API_URL
+```
 
-25 May 1989
+This allows the frontend to communicate with the deployed backend without hardcoding the API URL into individual components.
 
-Estimated average log return:
+---
 
-Before change:
+## ⚠️ Limitations
 
--0.015%
+Due to hardware limitations, Bayesian inference was performed on the first **1,000 observations** using **100 posterior draws**.
 
-After change:
+This configuration was chosen to demonstrate the Bayesian change point methodology while keeping computation practical on available hardware.
 
-+0.037%
+The resulting change point should therefore be interpreted within the scope of this reduced sample rather than as a definitive conclusion about the complete Brent oil price history.
 
-Estimated volatility:
+---
 
-σ ≈ 0.029
-Interactive Dashboard
+## 🔮 Future Improvements
 
-The dashboard provides:
+* Run Bayesian inference on the complete dataset using greater computational resources
+* Incorporate macroeconomic variables such as GDP, inflation, and exchange rates
+* Compare Bayesian change point detection with alternative structural break models
+* Add interactive filtering by event type
+* Expand the API with additional analytical endpoints
 
-Brent oil price visualization
-Bayesian change point marker
-Historical event markers
-KPI summary cards
-Date filtering
-Interactive tooltips
-Responsive layout
-API Endpoints
-Endpoint	Description
-GET /prices	Returns historical Brent oil prices
-GET /change-points	Returns Bayesian change point results
-GET /events	Returns major historical events
-Dashboard Screenshots
-Main Dashboard
-docs/dashboard.png
+---
 
-(After uploading to GitHub, replace the text above with:)
+## 📈 Conclusion
 
-![Dashboard](docs/dashboard.png)
-Filtered Dashboard
-![Filtered Dashboard](docs/filtered_dashboard.png)
-Event Highlight
-![Event Highlight](docs/event_highlight.png)
-Limitations
+This project demonstrates an end-to-end workflow combining **data analysis, Bayesian statistical modeling, REST API development, and interactive frontend visualization**.
 
-Due to hardware limitations, Bayesian inference was performed on the first 1,000 observations using 100 posterior draws.
+The deployed application provides an accessible way to explore Brent crude oil price behavior, detected structural changes, and historical events.
 
-This configuration demonstrates the Bayesian change point methodology while maintaining practical execution time.
+### 🔗 Live Application
 
-Future Work
-
-Future improvements may include:
-
-Running Bayesian inference on the complete dataset using greater computational resources.
-Incorporating macroeconomic variables such as GDP, inflation, and exchange rates.
-Comparing Bayesian change point detection with alternative structural break models.
-Adding interactive filtering by event type.
-Deploying the dashboard as a web application.
-Conclusion
-
-This project demonstrates how Bayesian Change Point Analysis can identify structural changes in Brent crude oil prices and how an interactive dashboard can communicate these insights effectively. The combination of statistical modeling and visualization provides stakeholders with a practical tool for exploring historical oil market behavior.
+**https://brent-oil-dashboard.vercel.app/**
